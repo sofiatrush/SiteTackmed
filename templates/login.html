@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="../static/logothyp.jpg" alt="First Aid Logo"> First Aid
+        </a>
+        <nav>
+            <a href="/theory">Теорія</a>
+            <a href="/tests">Тести</a>
+        </nav>
+    </header>
 
+    <div class="container">
+        <h1>Вхід у акаунт</h1>
+        <form method="POST" action="/login">
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <a href="/forgot-password" class="forgot-password">Забули пароль?</a>
+                <button type="submit">Увійти</button>
+                <a href="/register" class="register-link">Зареєструватися</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

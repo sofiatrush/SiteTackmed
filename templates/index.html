@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <header>
+        <div class="logo-nav">
+            <a href="/" class="logo">
+                <img src="../static/logothyp.jpg" alt="First Aid Logo"> First Aid
+            </a>
+            <nav>
+                <a href="/theory">Теорія</a>
+                <a href="/tests">Тести</a>
+            </nav>
+        </div>
+        <div class="auth-buttons">
+            {% if session.get("email") %}
+                <a href="/profile" class="user-icon">
+                    <img src="/static/user-icon.png" alt="User Profile" style="width: 40px; height: 40px;">
+                </a>
+            {% else %}
+                <a href="/login" class="login">Увійти</a>
+                <a href="/register" class="register">Зареєструватися</a>
+            {% endif %}
+        </div>
+    </header>
 
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Основи першої медичної допомоги</h1>
+                <p>Навички, які рятують життя</p>
+            </div>
+            <div class="hero-image">
+                <img src="../static/important.jpg" alt="CPR Training">
+            </div>
+        </section>
+
+        <section class="importance">
+            <h2>Чому це важливо?</h2>
+            <div class="importance-grid">
+                <div>
+                    <p>За даними Червоного Хреста, до 59% смертей від травм можна запобігти, якщо вчасно надати першу допомогу.</p>
+                </div>
+                <div>
+                    <p>За даними Американської асоціації серця, негайна СЛР може подвоїти або навіть потроїти шанси людини на виживання після зупинки серця.</p>
+                </div>
+                <div>
+                    <p>Дослідження доводять: у 90% випадків раптової зупинки серця правильна перша допомога значно підвищує шанси на виживання.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="action-cards">
+            <div class="action-cards-container">
+                <div class="action-card">
+                    <img src="../static/learn-more.jpg" alt="Learn More">
+                    <h3>Прості кроки, що рятують життя – вчися сьогодні!</h3>
+                    <a href="/theory">Дізнатися більше</a>
+                </div>
+                <div class="action-card">
+                    <img src="../static/test.jpg" alt="Test Yourself">
+                    <h3>Перевір себе: чи готовий ти діяти в екстреній ситуації?</h3>
+                    <a href="/tests">Перевір себе</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="call-to-action">
+            <div class="call-to-action-header">
+                <h2>Страх паралізує, знання рятують – навчись діяти!</h2>
+            </div>
+            <div class="call-to-action-content">
+                {% if session.get("email") %}
+                    <a href="/profile">Особистий кабінет</a>
+                {% else %}
+                    <a href="/login">Увійти</a>
+                    <p>(Увійдіть, щоб відстежувати свій прогрес)</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <a href="/" class="logo">
+            <img src="../static/logothyp.jpg" alt="First Aid Logo"> First Aid
+        </a>
+        <div>
+            {% if session.get("email") %}
+                <a href="/logout">Вийти</a>
+            {% else %}
+                <a href="/login">Авторизація</a>
+                <a href="/register">Реєстрація</a>
+            {% endif %}
+            <a href="/contacts">Контакти</a>
+        </div>
+    </footer>
+    
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92ca6f74f861b03c',t:'MTc0NDAzODQ1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
