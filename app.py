@@ -117,19 +117,57 @@ def profile():
 
 @app.route('/tests', methods=['GET'])
 def tests_menu():
-    pass
+    user_results = {}
+    name = session.get("name") if "email" in session else None
+    if session.get("email"):
+        username = session["email"]
+        db = db_manager.get_db()
+        row = db.execute("SELECT * FROM results WHERE username = ?", (username,)).fetchone()
+        if row:
+            user_results = {f'test{i}': row[f'test{i}'] for i in range(1, 9)}
+        else:
+            user_results = {f'test{i}': 0 for i in range(1, 9)}
+    return render_template("tests_menu.html", user_results=user_results, name=name)
 
 app.route('/test1')
 def test1_page():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("tests_frontend1.html", name=name)
 
 @app.route('/test2')
 def test2_page():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("tests_frontend2.html", name=name)
 
 @app.route('/submitTestResults', methods=['POST'])
 def submit_test_results():
-    pass
+    data = request.get_json()
+    score = data.get('score')
+    test_name = data.get('test_name')
+
+    if 'email' not in session:
+        return jsonify(message="Test taken, but result not saved (user not logged in)."), 200
+
+    username = session['email']
+    db = db_manager.get_db()
+    row = db.execute("SELECT * FROM results WHERE username = ?", (username,)).fetchone()
+
+    if row:
+        current_score = row[test_name]
+        if score > current_score:
+            db.execute(f"UPDATE results SET {test_name} = ? WHERE username = ?", (score, username))
+            db.commit()
+            return jsonify(message="Test result updated."), 200
+        return jsonify(message="Test result not updated"), 200
+    else:
+        tests = {f"test{i}": 0 for i in range(1, 9)}
+        tests[test_name] = score
+        db.execute('''
+            INSERT INTO results (username, test1, test2, test3, test4, test5, test6, test7, test8)
+            VALUES (:username, :test1, :test2, :test3, :test4, :test5, :test6, :test7, :test8)
+        ''', {"username": username, **tests})
+        db.commit()
+        return jsonify(message="Test result saved."), 201
 
 def create_app():
     with app.app_context():
