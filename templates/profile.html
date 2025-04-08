@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профіль</title>
+    <link rel="stylesheet" href="/static/profile.css">
+</head>
+<body>
+    <header>
+        <div class="logo-nav">
+            <a href="/" class="logo">
+                <img src="../static/logothyp.jpg" alt="First Aid Logo"> First Aid
+            </a>
+            <nav>
+                <a href="/theory">Теорія</a>
+                <a href="/tests">Тести</a>
+            </nav>
+        </div>
+        <div class="auth-buttons">
+            {% if session.get("email") %}
+                <a href="/profile" class="user-icon">
+                    <img src="/static/user-icon.png" alt="User Profile" style="width: 40px; height: 40px;">
+                </a>
+            {% else %}
+                <a href="/login" class="login">Увійти</a>
+                <a href="/register" class="register">Зареєструватися</a>
+            {% endif %}
+        </div>
+    </header>
 
+    <div class="container">
+        <div class="info-group">
+            <label><h3>Імʼя</h3></label>
+            <div class="info-field">{{ user.name }}</div>
+        </div>
+
+        <div class="info-group">
+            <label><h3>Прізвище</h3></label>
+            <div class="info-field">{{ user.surname }}</div>
+        </div>
+
+        <div class="info-group">
+            <label><h3>Ел. пошта</h3></label>
+            <div class="info-field">{{ user.email }}</div>
+        </div>
+
+        <div class="track-progress">
+            <button class="track-btn">Відстежити прогрес</button>
+            <span class="tooltip">
+                Тест 1. Алгоритм MARCH: {{ user_results.test1 }} / 5<br>
+                Тест 2. Алгоритм MARCH: {{ user_results.test2 }} / 5
+            </span>
+        </div>
+    </div>
+</body>
+</html>
