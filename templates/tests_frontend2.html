@@ -1,1 +1,251 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тест 2</title>
+    <link rel="stylesheet" href="../static/tests.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo-nav">
+        <a href="/" class="logo">
+          <img src="../static/logothyp.jpg" alt="First Aid Logo" /> First Aid
+        </a>
+        <nav>
+          <a href="/theory">Теорія</a>
+          <a href="/tests">Тести</a>
+        </nav>
+      </div>
+      <div class="auth-buttons">
+        {% if session.get("email") %}
+            <a href="/profile" class="user-icon">
+                <img src="/static/user-icon.png" alt="User Profile" style="width: 40px; height: 40px;">
+            </a>
+        {% else %}
+            <a href="/login" class="login">Увійти</a>
+            <a href="/register" class="register">Зареєструватися</a>
+        {% endif %}
+    </div>
+    </header>
+    <div class="container">
+      <div class="pagination"></div>
+      <div class="question-number">
+        Питання <strong id="question-number">1</strong>
+      </div>
+      <p id="question-text"></p>
+      <div class="options"></div>
+      <div class="navigation">
+        <button id="prev-button">&lt;- Попереднє</button>
+        <button id="next-button">Наступне -&gt;</button>
+      </div>
+    </div>
 
+    <div class="results-banner" id="results-banner">
+      <h2>Результати</h2>
+      <p id="results-text"></p>
+      <div class="results-options">
+        <button class="close-btn" id="close-results">Закрити</button>
+        <button class="retake-btn" id="retake-test">Перепройти знову</button>
+        <button class="show-answers-btn" id="show-answers">Показати правильні відповіді</button>
+      </div>
+    </div>
+
+    <div class="answers-section" id="answers-section">
+      <h2>Правильні відповіді</h2>
+      <div id="correct-answers"></div>
+      <button class="close-answers-btn" id="close-answers">Закрити</button>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          text: "Яка дія має бути першою під час огляду постраждалого?",
+          answers: ["Перевірка пульсу", "Забезпечення власної безпеки", "Початок серцево-легеневої реанімації", "Виклик швидкої допомоги"],
+          correct: "Забезпечення власної безпеки",
+        },
+        {
+          text: "Що свідчить про відсутність свідомості у постраждалого?",
+          answers: [
+            "Відкриті очі",
+            "Позитивна відповідь на запитання",
+            "Відсутність реакції на голос і дотик",
+            "Часте дихання",
+          ],
+          correct: "Відсутність реакції на голос і дотик",
+        },
+        {
+          text: "Як правильно перевірити дихання, якщо немає підозри на травму хребта?",
+          answers: [
+            "Покласти вухо на груди",
+            "Натиснути на груди і слухати звук",
+            "Запрокинути голову, підняти підборіддя і прислухатися 10 секунд",
+            "Затиснути ніс і подивитися, чи відкриє очі",
+          ],
+          correct: "Запрокинути голову, підняти підборіддя і прислухатися 10 секунд",
+        },
+        {
+          text: "Яка кровотеча є найнебезпечнішою та вимагає негайної зупинки?",
+          answers: [
+            "Синці та подряпини",
+            "Кровотеча з носа",
+            "Артеріальна",
+            "Кровоточивість ясен",
+          ],
+          correct: "Артеріальна",
+        },
+        {
+          text: "Чому важливо проводити огляд 'від голови до п’ят'?",
+          answers: [
+            "Щоб зняти одяг постраждалого",
+            "Для зменшення болю",
+            "Для підготовки до транспортування",
+            "Щоб виявити всі можливі ушкодження, включно з 'прихованими'",
+          ],
+          correct: "Щоб виявити всі можливі ушкодження, включно з 'прихованими'",
+        },
+      ];
+
+      let currentQuestion = 0;
+      let selectedAnswers = {};
+
+      const questionNumberElement = document.getElementById("question-number");
+      const questionTextElement = document.getElementById("question-text");
+      const optionsContainer = document.querySelector(".options");
+      const nextButton = document.getElementById("next-button");
+      const prevButton = document.getElementById("prev-button");
+      const resultsBanner = document.getElementById("results-banner");
+      const resultsText = document.getElementById("results-text");
+      const closeResultsBtn = document.getElementById("close-results");
+      const retakeTestBtn = document.getElementById("retake-test");
+      const showAnswersBtn = document.getElementById("show-answers");
+      const answersSection = document.getElementById("answers-section");
+      const correctAnswersContainer = document.getElementById("correct-answers");
+      const closeAnswersBtn = document.getElementById("close-answers");
+
+      function loadQuestion() {
+        const question = questions[currentQuestion];
+        questionNumberElement.textContent = currentQuestion + 1;
+        questionTextElement.textContent = question.text;
+        optionsContainer.innerHTML = "";
+
+        question.answers.forEach((answer) => {
+          const button = document.createElement("button");
+          button.textContent = answer;
+          button.classList.toggle(
+            "selected",
+            selectedAnswers[currentQuestion] === answer
+          );
+          button.addEventListener("click", () => {
+            selectedAnswers[currentQuestion] = answer;
+            loadQuestion();
+          });
+          optionsContainer.appendChild(button);
+        });
+
+        nextButton.textContent =
+          currentQuestion === questions.length - 1
+            ? "Завершити"
+            : "Наступне ->";
+
+        prevButton.disabled = currentQuestion === 0;
+      }
+
+      nextButton.addEventListener("click", () => {
+        if (currentQuestion === questions.length - 1) {
+          showResults();
+        } else {
+          currentQuestion++;
+          loadQuestion();
+        }
+      });
+
+      prevButton.addEventListener("click", () => {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          loadQuestion();
+        }
+      });
+
+      closeResultsBtn.addEventListener("click", () => {
+        window.location.href = "{{ url_for('tests_menu') }}";
+      });
+
+      retakeTestBtn.addEventListener("click", () => {
+        currentQuestion = 0;
+        selectedAnswers = {};
+        resultsBanner.style.display = "none";
+        loadQuestion();
+      });
+
+      showAnswersBtn.addEventListener("click", () => {
+        resultsBanner.style.display = "none";
+        displayCorrectAnswers();
+        answersSection.style.display = "block";
+      });
+
+      closeAnswersBtn.addEventListener("click", () => {
+        answersSection.style.display = "none";
+        window.location.href = "{{ url_for('tests_menu') }}";
+      });
+
+      function showResults() {
+        const correctCount = Object.keys(selectedAnswers).filter(
+          (i) => selectedAnswers[i] === questions[i].correct
+        ).length;
+
+        resultsText.textContent = `Ви відповіли правильно на ${correctCount} з ${questions.length} питань!`;
+        resultsBanner.style.display = "block";
+
+        const payload = {
+          score: correctCount,
+          test_name: "test2",
+        };
+
+        fetch("/submitTestResults", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error saving result or user not logged in");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Result saved:", data.message);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      function displayCorrectAnswers() {
+        correctAnswersContainer.innerHTML = "";
+        questions.forEach((question, index) => {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("answer-item");
+
+          const questionText = document.createElement("p");
+          questionText.textContent = `Питання ${index + 1}: ${question.text}`;
+          questionDiv.appendChild(questionText);
+
+          const userAnswer = document.createElement("p");
+          userAnswer.textContent = `Ваша відповідь: ${selectedAnswers[index] || "Не вибрано"}`;
+          userAnswer.style.color = selectedAnswers[index] === question.correct ? "green" : "red";
+          questionDiv.appendChild(userAnswer);
+
+          const correctAnswer = document.createElement("p");
+          correctAnswer.textContent = `Правильна відповідь: ${question.correct}`;
+          correctAnswer.style.color = "green";
+          questionDiv.appendChild(correctAnswer);
+
+          correctAnswersContainer.appendChild(questionDiv);
+        });
+      }
+
+      loadQuestion();
+    </script>
+  </body>
+</html>

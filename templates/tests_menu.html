@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тести</title>
+    <link rel="stylesheet" href="../static/theory_menu.css">
+  </head>
+  <body>
+    <header>
+      <div class="logo-nav">
+        <a href="/" class="logo">
+          <img src="../static/logothyp.jpg" alt="First Aid Logo" /> First Aid
+        </a>
+        <nav>
+          <a href="/theory">Теорія</a>
+          <a href="/tests">Тести</a>
+        </nav>
+      </div>
+      <div class="auth-buttons">
+        {% if session.get("email") %}
+          <a href="/profile" class="user-icon">
+            <img src="../static/user-icon.png" alt="User Profile" style="width: 40px; height: 40px;">
+          </a>
+        {% else %}
+          <a href="/login" class="login">Увійти</a>
+          <a href="/register" class="register">Зареєструватися</a>
+        {% endif %}
+      </div>
+    </header>
 
+    <main>
+      <section class="tests-section">
+        <h1>Тести</h1>
+        <div class="test-list">
+          <p>
+            <a href="{{ url_for('test1_page') }}">Тема 1. Алгоритм MARCH</a>
+            {% if session.get('email') %}
+              <span class="result">(Результат: {{ user_results['test1'] }} / 5)</span>
+            {% endif %}
+          </p>
+          <p>
+            <a href="{{ url_for('test2_page') }}">Тема 2. Правила огляду постраждалого</a>
+            {% if session.get('email') %}
+              <span class="result">(Результат: {{ user_results['test2'] }} / 5)</span>
+            {% endif %}
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
