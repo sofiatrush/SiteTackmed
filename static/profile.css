@@ -1,1 +1,196 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: url("../static/image.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #000000;
+    padding: 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-nav {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.logo img {
+    width: 70px;
+    margin-right: 7px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.auth-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.auth-buttons a {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.auth-buttons .login {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+.auth-buttons .register {
+    background-color: #891D1A;
+    color: white;
+}
+
+.user-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-icon:hover {
+    opacity: 0.8;
+}
+
+.container {
+    width: 40%;
+    margin: 5% auto;
+    background: transparent;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.info-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.info-group label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #981717;
+}
+
+.info-group .info-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: transparent;
+    color: white;
+}
+
+
+.info-group h2 {
+    font-size: 24px;
+    color: #981717;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.info-group h3 {
+    font-size: 20px;
+    color: #981717;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+
+.empty-line {
+    height: 20px;
+}
+
+
+.track-progress {
+    margin-top: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.track-btn {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    width: 300px;
+    height: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    line-height: 1.2;
+    white-space: normal;
+    overflow: hidden;
+}
+
+.track-btn:hover {
+    background-color: #aaa;
+}
+
+.track-btn:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+    text-align: center;
+}
 
