@@ -73,47 +73,71 @@ def logout():
 
 @app.route("/theory")
 def theory():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory_menu.html", name=name)
 
 @app.route("/theory/Blood")
 def Blood():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/Blood.html", name=name)
 
 @app.route("/theory/BloodHelp")
 def BloodHelp():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/BloodHelp.html", name=name)
 
 @app.route("/theory/ambulance")
 def ambulance():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/ambulance.html", name=name)
 
 @app.route("/theory/march")
 def march():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/march.html", name=name)
 
 @app.route("/theory/burns")
 def burns():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/burns.html", name=name)
 
 @app.route("/theory/consciousness")
 def consciousness():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/consciousness.html", name=name)
 
 @app.route("/theory/examination")
 def examination():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/examination.html", name=name)
 
 @app.route("/theory/frostbite")
 def frostbite():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("theory/frostbite.html", name=name)
 
 @app.route("/contacts")
 def contacts():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("contacts.html", name=name)
 
 @app.route("/profile")
 def profile():
-    pass
+    if "email" not in session:
+        return redirect(url_for("login"))
+
+    db = db_manager.get_db()
+    user = db.execute("SELECT * FROM users WHERE email = ?", (session["email"],)).fetchone()
+    if user:
+        user_results = {}
+        db = db_manager.get_db()
+        row = db.execute("SELECT * FROM results WHERE username = ?", (user["email"],)).fetchone()
+        if row:
+            user_results = {f'test{i}': row[f'test{i}'] for i in range(1, 9)}
+        else:
+            user_results = {f'test{i}': 0 for i in range(1, 9)}
+        return render_template("profile.html", user=user, user_results=user_results)
+    return redirect(url_for("login"))
 
 @app.route('/tests', methods=['GET'])
 def tests_menu():
