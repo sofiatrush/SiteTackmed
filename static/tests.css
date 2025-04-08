@@ -11,7 +11,6 @@
     padding: 0;
     width: 100vw;
     min-height: 100vh;
-    /* Removed flex centering from body */
   }
   
   header {
