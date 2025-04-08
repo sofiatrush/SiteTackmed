@@ -20,19 +20,56 @@ def close_db(error):
 
 @app.route("/")
 def home():
-    pass
+    name = session.get("name") if "email" in session else None
+    return render_template("index.html", name=name)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    pass
+    if request.method == "POST":
+        email = request.form["email"]
+        password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+
+        db = db_manager.get_db()
+        user = db.execute("SELECT * FROM users WHERE email = ? AND password = ?", 
+                         (email, password)).fetchone()
+
+        if user:
+            session["email"] = user["email"]
+            session["name"] = user["name"]
+            flash("Вхід успішний!", "success")
+            return redirect(url_for("home"))
+        else:
+            flash("Неправильний email або пароль", "danger")
+
+    return render_template("login.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    pass
+    if request.method == "POST":
+        name = request.form["name"]
+        surname = request.form["surname"]
+        email = request.form["email"]
+        password = hashlib.sha256(request.form["password"].encode()).hexdigest()
+
+        db = db_manager.get_db()
+        try:
+            db.execute("INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)",
+                      (name, surname, email, password))
+            db.commit()
+            session["email"] = email
+            session["name"] = name
+            flash("Реєстрація успішна!", "success")
+            return redirect(url_for("home"))
+        except sqlite3.IntegrityError:
+            flash("Цей email вже зареєстрований!", "danger")
+
+    return render_template("register.html")
 
 @app.route("/logout")
 def logout():
-    pass
+    session.clear()
+    flash("Ви вийшли з акаунту.", "info")
+    return redirect(url_for("home"))
 
 @app.route("/theory")
 def theory():
