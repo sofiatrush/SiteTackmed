@@ -153,7 +153,7 @@ def tests_menu():
             user_results = {f'test{i}': 0 for i in range(1, 9)}
     return render_template("tests_menu.html", user_results=user_results, name=name)
 
-app.route('/test1')
+@app.route('/test1')
 def test1_page():
     name = session.get("name") if "email" in session else None
     return render_template("tests_frontend1.html", name=name)
