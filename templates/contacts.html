@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід</title>
+    <link rel="stylesheet" href="/static/contacts.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">
+            <img src="../static/logothyp.jpg" alt="First Aid Logo"> First Aid
+        </a>
+        <nav>
+            <a href="/theory">Теорія</a>
+            <a href="/tests">Тести</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content">
+            <h1>Контакти</h1>
+            <H3>Зв'яжіться з нами за email:</H3>                               
+            <p>firstaidsupport@gmail.com</p>
+            <H3>Зв'яжіться з нами за номером телефону:</H3>
+            <p>+380 68 214 83 60        +380 96 143 48 78</p>
+            <p><a href="{{ url_for('home') }}">На головну</a></p>
+        </div>
+    </main>
+</body>
+</html>
 
