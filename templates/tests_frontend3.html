@@ -1,59 +1,281 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профіль</title>
-    <link rel="stylesheet" href="/static/profile.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тест</title>
+    <link rel="stylesheet" href="../static/tests.css" />
+  </head>
+  <body>
     <header>
-        <div class="logo-nav">
-            <a href="/" class="logo">
-                <img src="../static/logothyp.jpg" alt="First Aid Logo"> First Aid
+      <div class="logo-nav">
+        <a href="/" class="logo">
+          <img src="../static/logothyp.jpg" alt="First Aid Logo" /> First Aid
+        </a>
+        <nav>
+          <a href="/theory">Теорія</a>
+          <a href="/tests">Тести</a>
+        </nav>
+      </div>
+      <div class="auth-buttons">
+        {% if session.get("email") %}
+            <a href="/profile" class="user-icon">
+                <img src="/static/user-icon.png" alt="User Profile" style="width: 40px; height: 40px;">
             </a>
-            <nav>
-                <a href="/theory">Теорія</a>
-                <a href="/tests">Тести</a>
-            </nav>
-        </div>
-        <div class="auth-buttons">
-            {% if session.get("email") %}
-                <a href="/profile" class="user-icon">
-                    <img src="/static/user-icon.png" alt="User Profile" style="width: 40px; height: 40px;">
-                </a>
-            {% else %}
-                <a href="/login" class="login">Увійти</a>
-                <a href="/register" class="register">Зареєструватися</a>
-            {% endif %}
-        </div>
+        {% else %}
+            <a href="/login" class="login">Увійти</a>
+            <a href="/register" class="register">Зареєструватися</a>
+        {% endif %}
+      </div>
     </header>
-
     <div class="container">
-        <div class="info-group">
-            <label><h3>Імʼя</h3></label>
-            <div class="info-field">{{ user.name }}</div>
-        </div>
-
-        <div class="info-group">
-            <label><h3>Прізвище</h3></label>
-            <div class="info-field">{{ user.surname }}</div>
-        </div>
-
-        <div class="info-group">
-            <label><h3>Ел. пошта</h3></label>
-            <div class="info-field">{{ user.email }}</div>
-        </div>
-
-        <div class="track-progress">
-            <button class="track-btn">Відстежити прогрес</button>
-            <span class="tooltip">
-                Тест 1. Алгоритм MARCH: {{ user_results.test1 }} / 5<br>
-                Тест 2. Алгоритм MARCH: {{ user_results.test2 }} / 5<br>
-                Тест 3. Як викликати швидку: {{ user_results.test3 }} / 8
-            </span>
-        </div>
+      <div class="pagination"></div>
+      <div class="question-number">
+        Питання <strong id="question-number">1</strong>
+      </div>
+      <p id="question-text"></p>
+      <div class="options"></div>
+      <div class="navigation">
+        <button id="prev-button">&lt;- Попереднє</button>
+        <button id="next-button">Наступне -&gt;</button>
+      </div>
     </div>
-</body>
-</html>
 
+    <div class="results-banner" id="results-banner">
+      <h2>Результати</h2>
+      <p id="results-text"></p>
+      <div class="results-options">
+        <button class="close-btn" id="close-results">Закрити</button>
+        <button class="retake-btn" id="retake-test">Перепройти знову</button>
+        <button class="show-answers-btn" id="show-answers">Показати правильні відповіді</button>
+      </div>
+    </div>
+
+    <div class="answers-section" id="answers-section">
+      <h2>Правильні відповіді</h2>
+      <div id="correct-answers"></div>
+      <button class="close-answers-btn" id="close-answers">Закрити</button>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          text: "За яким номером можна викликати екстрену медичну допомогу в Україні?",
+          answers: ["101", "102", "103 або 112", "104"],
+          correct: "103 або 112",
+        },
+        {
+          text: "Що треба повідомити при виклику швидкої допомоги в першу чергу?",
+          answers: [
+            "Симптоми хвороби",
+            "Своє ім'я та номер телефону",
+            "Адресу події",
+            "Вік постраждалого"
+          ],
+          correct: "Своє ім'я та номер телефону",
+        },
+        {
+          text: "Яка найважливіша інформація про місце події при виклику швидкої?",
+          answers: [
+            "Кількість поверхів у будинку",
+            "Точна адреса або орієнтири місця події",
+            "Наявність світлофорів поблизу",
+            "Назва найближчої аптеки"
+          ],
+          correct: "Точна адреса або орієнтири місця події",
+        },
+        {
+          text: "Що потрібно зробити перед викликом швидкої допомоги?",
+          answers: [
+            "Переконатись у власній безпеці",
+            "Зателефонувати родичам потерпілого",
+            "Сфотографувати потерпілого",
+            "Повідомити у соціальних мережах"
+          ],
+          correct: "Переконатись у власній безпеці",
+        },
+        {
+          text: "Що робити, якщо стан потерпілого змінився після виклику швидкої?",
+          answers: [
+            "Нічого не робити, просто чекати",
+            "Повідомити диспетчера про оновлення стану",
+            "Скасувати виклик і викликати знову",
+            "Перевезти потерпілого самостійно"
+          ],
+          correct: "Повідомити диспетчера про оновлення стану",
+        },
+        {
+          text: "Яку інформацію про потерпілого важливо надати диспетчеру?",
+          answers: [
+            "Прізвище, ім'я, вік або стать і орієнтовний вік",
+            "Тільки вагу і зріст",
+            "Релігійні переконання",
+            "Наявність страхового полісу"
+          ],
+          correct: "Прізвище, ім'я, вік або стать і орієнтовний вік",
+        },
+        {
+          text: "Які альтернативні варіанти виклику швидкої існують для осіб з вадами слуху?",
+          answers: [
+            "Тільки особисте звернення до лікарні",
+            "Виклик через родичів",
+            "Виклик через SMS або спеціальні додатки/відеозв'язок",
+            "Немає альтернативних варіантів"
+          ],
+          correct: "Виклик через SMS або спеціальні додатки/відеозв'язок",
+        },
+        {
+          text: "Чому важливо не перебільшувати симптоми при виклику швидкої допомоги?",
+          answers: [
+            "Щоб швидка приїхала швидше",
+            "Для надання правдивої інформації та правильного визначення пріоритетності виклику",
+            "Це не важливо, головне, щоб приїхали",
+            "Щоб не сплачувати штраф за неправдивий виклик"
+          ],
+          correct: "Для надання правдивої інформації та правильного визначення пріоритетності виклику",
+        }
+      ];
+
+      let currentQuestion = 0;
+      let selectedAnswers = {};
+
+      const questionNumberElement = document.getElementById("question-number");
+      const questionTextElement = document.getElementById("question-text");
+      const optionsContainer = document.querySelector(".options");
+      const nextButton = document.getElementById("next-button");
+      const prevButton = document.getElementById("prev-button");
+      const resultsBanner = document.getElementById("results-banner");
+      const resultsText = document.getElementById("results-text");
+      const closeResultsBtn = document.getElementById("close-results");
+      const retakeTestBtn = document.getElementById("retake-test");
+      const showAnswersBtn = document.getElementById("show-answers");
+      const answersSection = document.getElementById("answers-section");
+      const correctAnswersContainer = document.getElementById("correct-answers");
+      const closeAnswersBtn = document.getElementById("close-answers");
+
+      function loadQuestion() {
+        const question = questions[currentQuestion];
+        questionNumberElement.textContent = currentQuestion + 1;
+        questionTextElement.textContent = question.text;
+        optionsContainer.innerHTML = "";
+        question.answers.forEach((answer) => {
+          const button = document.createElement("button");
+          button.textContent = answer;
+          button.classList.toggle(
+            "selected",
+            selectedAnswers[currentQuestion] === answer
+          );
+          button.addEventListener("click", () => {
+            selectedAnswers[currentQuestion] = answer;
+            loadQuestion();
+          });
+          optionsContainer.appendChild(button);
+        });
+
+        nextButton.textContent =
+          currentQuestion === questions.length - 1
+            ? "Завершити"
+            : "Наступне ->";
+
+        prevButton.disabled = currentQuestion === 0;
+      }
+
+      nextButton.addEventListener("click", () => {
+        if (currentQuestion === questions.length - 1) {
+          showResults();
+        } else {
+          currentQuestion++;
+          loadQuestion();
+        }
+      });
+
+      prevButton.addEventListener("click", () => {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          loadQuestion();
+        }
+      });
+
+      closeResultsBtn.addEventListener("click", () => {
+        window.location.href = "{{ url_for('tests_menu') }}";
+      });
+
+
+      retakeTestBtn.addEventListener("click", () => {
+        currentQuestion = 0;
+        selectedAnswers = {};
+        resultsBanner.style.display = "none";
+        loadQuestion();
+      });
+
+      showAnswersBtn.addEventListener("click", () => {
+        resultsBanner.style.display = "none";
+        displayCorrectAnswers();
+        answersSection.style.display = "block";
+      });
+
+      closeAnswersBtn.addEventListener("click", () => {
+        answersSection.style.display = "none";
+        window.location.href = "{{ url_for('tests_menu') }}";
+      });
+
+      function showResults() {
+        const correctCount = Object.keys(selectedAnswers).filter(
+          (i) => selectedAnswers[i] === questions[i].correct
+        ).length;
+
+        resultsText.textContent = `Ви відповіли правильно на ${correctCount} з ${questions.length} питань!`;
+        resultsBanner.style.display = "block";
+
+        const payload = {
+          score: correctCount,
+          test_name: "test3",
+        };
+
+        fetch("/submitTestResults", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error saving result or user not logged in");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Result saved:", data.message);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      function displayCorrectAnswers() {
+        correctAnswersContainer.innerHTML = "";
+        questions.forEach((question, index) => {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("answer-item");
+
+          const questionText = document.createElement("p");
+          questionText.textContent = `Питання ${index + 1}: ${question.text}`;
+          questionDiv.appendChild(questionText);
+
+          const userAnswer = document.createElement("p");
+          userAnswer.textContent = `Ваша відповідь: ${selectedAnswers[index] || "Не вибрано"}`;
+          userAnswer.style.color = selectedAnswers[index] === question.correct ? "green" : "red";
+          questionDiv.appendChild(userAnswer);
+
+          const correctAnswer = document.createElement("p");
+          correctAnswer.textContent = `Правильна відповідь: ${question.correct}`;
+          correctAnswer.style.color = "green";
+          questionDiv.appendChild(correctAnswer);
+
+          correctAnswersContainer.appendChild(questionDiv);
+        });
+      }
+
+      loadQuestion();
+    </script>
+  </body>
+</html>
