@@ -163,6 +163,12 @@ def test2_page():
     name = session.get("name") if "email" in session else None
     return render_template("tests_frontend2.html", name=name)
 
+
+@app.route('/test3')
+def test3_page():
+    name = session.get('name') if 'email' in session else None
+    return render_template('tests_frontend3.html', name = name)
+
 @app.route('/submitTestResults', methods=['POST'])
 def submit_test_results():
     data = request.get_json()
