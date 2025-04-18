@@ -20,7 +20,9 @@ class FirstAidApp:
     def run(self):
         with self.app.app_context():
             self.db_manager.init_db()
-        self.app.run(debug=True)
+        port = int(os.environ.get("PORT", 5000))
+        self.app.run(host="0.0.0.0", port=port)
+
 
     def setup_routes(self):
         app = self.app
