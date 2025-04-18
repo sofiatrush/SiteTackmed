@@ -1,1 +1,1 @@
-web: gunicorn app:FirstAidApp().app
+web: gunicorn app:app

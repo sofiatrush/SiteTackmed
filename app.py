@@ -21,7 +21,8 @@ class FirstAidApp:
         with self.app.app_context():
             self.db_manager.init_db()
         port = int(os.environ.get("PORT", 5000))
-        self.app.run(host="0.0.0.0", port=port)
+        debug = os.environ.get("FLASK_ENV", "development") == "development"
+        self.app.run(host="0.0.0.0", port=port, debug=debug)
 
 
     def setup_routes(self):
@@ -202,5 +203,7 @@ class FirstAidApp:
             return jsonify(message="Test result saved."), 201
 
 if __name__ == "__main__":
-    app = FirstAidApp()
-    app.run()
+    app_instance = FirstAidApp()
+    app_instance.run()
+
+app = FirstAidApp().app
