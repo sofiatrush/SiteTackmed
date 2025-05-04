@@ -61,11 +61,10 @@ nav a:hover {
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 70px;
     color: rgb(143, 17, 17);
     margin-bottom: 60px;
     text-align: center;
-    font-size: 70px;
 }
 
 .content p {
@@ -83,4 +82,73 @@ h1 {
 
 .content a:hover {
     text-decoration: underline;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        font-size: 18px;
+    }
+    
+    .logo img {
+        width: 50px;
+        margin-right: 5px;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #000000;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 100;
+    }
+    
+    nav.active {
+        display: flex;
+    }
+    
+    nav a {
+        margin: 10px 0;
+        padding: 8px 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .content {
+        width: 90%;
+        margin: 20% auto;
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 36px;
+        margin-bottom: 30px;
+    }
+    
+    .content p {
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
 }
