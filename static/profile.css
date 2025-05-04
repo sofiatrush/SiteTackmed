@@ -15,10 +15,11 @@ body {
 
 header {
     background-color: #000000;
-    padding: 15px 15px;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 60px;
 }
 
 .logo-nav {
@@ -44,6 +45,7 @@ header {
 nav {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 nav a {
@@ -92,7 +94,8 @@ nav a:hover {
 }
 
 .container {
-    width: 40%;
+    width: 80%;
+    max-width: 800px;
     margin: 5% auto;
     background: transparent;
     padding: 30px;
@@ -121,7 +124,6 @@ nav a:hover {
     color: white;
 }
 
-
 .info-group h2 {
     font-size: 24px;
     color: #981717;
@@ -136,11 +138,9 @@ nav a:hover {
     text-align: left;
 }
 
-
 .empty-line {
     height: 20px;
 }
-
 
 .track-progress {
     margin-top: 20px;
@@ -153,7 +153,8 @@ nav a:hover {
     color: #333;
     border: none;
     border-radius: 10px;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     height: 40px;
     font-size: 14px;
     cursor: pointer;
@@ -188,88 +189,46 @@ nav a:hover {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 350px;
+    width: 90%;
+    max-width: 350px;
     z-index: 1;
     transition: opacity 0.3s ease;
     text-align: center;
 }
 
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     header {
         padding: 10px;
-        flex-wrap: wrap;
-    }
-    
-    .logo-nav {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        width: 100%;
+        height: auto;
     }
     
     .logo {
-        font-size: 18px;
-        margin-right: 0;
+        font-size: 20px;
+        margin-right: 10px;
     }
     
     .logo img {
         width: 50px;
-        margin-right: 5px;
-    }
-    
-    .menu-toggle {
-        display: block;
-        order: 2;
     }
     
     nav {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background-color: #000000;
-        flex-direction: column;
-        padding: 10px 0;
-        z-index: 100;
-        width: 100%;
-    }
-    
-    nav.active {
-        display: flex;
+        flex-grow: 1;
+        justify-content: center;
     }
     
     nav a {
-        margin: 8px 0;
-        padding: 8px 0;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .auth-buttons {
-        width: 100%;
-        justify-content: center;
-        margin-top: 10px;
+        margin: 0 10px;
+        font-size: 14px;
     }
     
     .auth-buttons a {
         padding: 6px 15px;
         font-size: 14px;
-        margin: 0 5px;
     }
     
     .container {
         width: 90%;
-        margin: 10% auto;
-        padding: 20px;
+        padding: 15px;
     }
     
     .info-group h2 {
@@ -279,26 +238,42 @@ nav a:hover {
     .info-group h3 {
         font-size: 18px;
     }
-    
-    .info-group label {
-        font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 18px;
     }
     
-    .info-group .info-field {
-        padding: 8px;
-        font-size: 14px;
+    .logo img {
+        width: 40px;
     }
     
-    .track-btn {
-        width: 90%;
-        max-width: 300px;
-        height: auto;
-        min-height: 40px;
+    nav a {
+        margin: 0 5px;
+        font-size: 12px;
+    }
+    
+    header {
+        padding: 5px 10px;
+    }
+    
+    .auth-buttons a {
+        padding: 5px 12px;
+        font-size: 12px;
+        margin-left: 5px;
+    }
+    
+    .container {
+        width: 95%;
         padding: 10px;
     }
     
-    .tooltip {
-        width: 90%;
-        max-width: 300px;
+    .info-group h2 {
+        font-size: 18px;
+    }
+    
+    .info-group h3 {
+        font-size: 16px;
     }
 }
