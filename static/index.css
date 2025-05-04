@@ -263,3 +263,143 @@ footer a:hover {
 .flash.success { background: green; color: white; }
 .flash.danger { background: darkred; color: white; }
 .flash.info { background: blue; color: white; }
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+    
+    .logo img {
+        width: 50px;
+    }
+    
+    .logo {
+        font-size: 18px;
+        margin-right: 10px;
+    }
+    
+    nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #000000;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 100;
+    }
+    
+    nav.active {
+        display: flex;
+    }
+    
+    nav a {
+        margin: 10px 0;
+        padding: 5px 15px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .auth-buttons a {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    .hero {
+        flex-direction: column;
+        padding: 30px 20px;
+        text-align: center;
+    }
+    
+    .hero-text h1 {
+        font-size: 36px;
+    }
+    
+    .hero-text p {
+        font-size: 18px;
+    }
+    
+    .hero-image img {
+        width: 100%;
+        max-width: 300px;
+        margin-top: 20px;
+    }
+    
+    .importance {
+        padding: 30px 20px;
+        min-height: auto;
+    }
+    
+    .importance h2 {
+        font-size: 32px;
+        margin-bottom: 40px;
+        margin-top: 20px;
+    }
+    
+    .importance-grid {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .importance-grid p {
+        font-size: 18px;
+    }
+    
+    .action-cards {
+        padding: 40px 20px;
+        min-height: auto;
+    }
+    
+    .action-cards-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .action-card h3 {
+        font-size: 22px;
+    }
+    
+    .action-card a {
+        font-size: 18px;
+    }
+    
+    .call-to-action-header {
+        padding: 30px 20px;
+    }
+    
+    .call-to-action-header h2 {
+        font-size: 28px;
+    }
+    
+    .call-to-action-content {
+        padding: 30px 20px;
+    }
+    
+    footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    footer .logo {
+        margin-bottom: 15px;
+    }
+    
+    footer a {
+        margin: 5px 10px;
+    }
+}
