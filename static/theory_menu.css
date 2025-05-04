@@ -1,224 +1,174 @@
 :root {
-    --primary-color: #8b0000;
-    --text-color: #333;
-    --bg-color: #f0f0f0;
-    --white: #ffffff;
-    --black: #000000;
-  }
-  
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    background-color: var(--bg-color);
-  }
-  
+  --primary-color: #8b0000;
+  --text-color: #333;
+  --bg-color: #f0f0f0;
+  --white: #ffffff;
+  --black: #000000;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+header {
+  background-color: #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+  padding: 0 20px;
+}
+
+.logo-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 45px;
+  margin-right: 10px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 25px;
+  font-size: 16px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.auth-buttons a {
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.auth-buttons .login {
+  background-color: white;
+  color: #1a1a1a;
+}
+
+.auth-buttons .register {
+  background-color: #b22222;
+  color: white;
+}
+
+.user-icon img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-icon:hover {
+  opacity: 0.8;
+}
+
+.content {
+  padding: 20px;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-size: 50px;
+  margin: 20px;
+}
+
+h3 {
+  color: var(--text-color);
+  font-size: 30px;
+  margin: 15px;
+}
+
+a {
+  color: var(--text-color);
+  background-color: transparent;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  margin: 15px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  color: var(--text-color);
+  font-size: 20px;
+  margin: 15px;
+}
+
+@media screen and (max-width: 768px) {
   header {
-    background-color: #000000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    padding: 0 20px;
+    padding: 10px;
   }
-  
-  .logo-nav {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    margin-right: 20px;
-  }
-  
+
   .logo img {
-    width: 70px;
-    margin-right: 7px;
+    width: 50px;
+  }
+
+  .logo {
+    font-size: 20px;
+    margin-right: 10px;
   }
   
   nav {
-    display: flex;
-    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
   }
-  
+
   nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 16px;
+    margin: 0 10px;
+    font-size: 14px;
   }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
+
   .auth-buttons a {
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    margin-left: 10px;
-    text-decoration: none;
-  }
-  
-  .auth-buttons .login {
-    background-color: white;
-    color: #1a1a1a;
-  }
-  
-  .auth-buttons .register {
-    background-color: #b22222;
-    color: white;
-  }
-  
-  .user-icon img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .user-icon:hover {
-    opacity: 0.8;
-  }
-  
-  .content {
-    padding: 20px;
+    padding: 6px 15px;
+    font-size: 14px;
   }
   
   h1 {
-    color: var(--primary-color);
-    font-size: 50px;
-    margin: 20px;
+    font-size: 36px;
+    margin: 15px;
   }
   
   h3 {
-    color: var(--text-color);
-    font-size: 30px;
-    margin: 15px;
-  }
-  
-  a {
-    color: var(--text-color);
-    background-color: transparent;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    margin: 15px;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  p {
-    color: var(--text-color);
-    font-size: 20px;
-    margin: 15px;
-  }
-  
-  :root {
-    --primary-color: #8b0000;
-    --text-color: #333;
-    --bg-color: #f0f0f0;
-    --white: #ffffff;
-    --black: #000000;
-  }
-  
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    background-color: var(--bg-color);
-  }
-  
-  header {
-    background-color: #000000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    padding: 0 20px;
-  }
-  
-  .logo-nav {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-    color: white;
     font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    margin-right: 20px;
+    margin: 10px;
   }
-  
-  .logo img {
-    width: 70px;
-    margin-right: 7px;
-  }
-  
-  nav {
-    display: flex;
-    align-items: center;
-  }
-  
-  nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 16px;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
-  .auth-buttons a {
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    margin-left: 10px;
-    text-decoration: none;
-  }
-  
-  .auth-buttons .login {
-    background-color: white;
-    color: #1a1a1a;
-  }
-  
-  .auth-buttons .register {
-    background-color: #b22222;
-    color: white;
-  }
-  
+}
